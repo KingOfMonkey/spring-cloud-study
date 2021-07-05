@@ -1,0 +1,42 @@
+server:
+  port: 18080
+  servlet:
+    context-path: /service-one
+spring:
+  application:
+    name: spring-boot-service1
+  cloud:
+    consul:
+      host: 47.108.202.112
+      port: 8500
+      discovery:
+        service-name: service1
+        heartbeat:
+          enabled: true #打开心跳检测
+  zipkin:
+    base-url: http://localhost:9411 #zipkin server 地址
+  sleuth:
+    sampler:
+      probability: 1.0 # 取样率，本地环境可以1.0 ，默认为0.1 = 10%
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000 #连接超时时间（防止由于服务器处理时间长而阻塞调用者）
+        readTimeout: 5000 #从连接建立时开始应用，在返回响应时间过长时触发
+        loggerLevel: BASIC #需要配合日志级别debug一起使用
+  hystrix:
+    enabled: true #开启熔断器
+
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: true
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000 # 这个时间如果比feign.client.config.default.readTimeout小的话，则接口如果没有在timeoutInMilliseconds返回则会进行熔断降级
+logging:
+  level:
+    com.meiya.springcloudstudy.service1: debug

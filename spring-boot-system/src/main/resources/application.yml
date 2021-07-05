@@ -1,0 +1,41 @@
+server:
+  port: 18084
+
+spring:
+  application:
+    name: spring-boot-system
+  datasource:
+    name: system_datasource
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://47.108.202.112:3306/aly_database?useUnicode=true&characterEncoding=utf8&useSSL=false
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+    druid:
+      filters: stat
+      maxActive: 10
+      initialSize: 2
+      maxWait: 60000
+      minIdle: 3
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: select 1
+      testWhileIdle: true
+      testOnBorrow: true
+      testOnReturn: false
+      poolPreparedStatements: true
+      maxOpenPreparedStatements: 20
+
+  cloud:
+    consul:
+      host: 47.108.202.112
+      port: 8500
+      discovery:
+        service-name: system #模拟和 spring-boot-service2进行负责均衡部署
+        heartbeat:
+          enabled: true #打开心跳检测
+  zipkin:
+    base-url: http://localhost:9411 #zipkin server 地址
+  sleuth:
+    sampler:
+      probability: 1.0 # 取样率，本地环境可以1.0 ，默认为0.1 = 10%

@@ -1,0 +1,38 @@
+server:
+  port: 17999
+
+spring:
+  application:
+    name: spring-cloud-gateway
+  cloud:
+    consul:
+      host: 47.108.202.112
+      port: 8500
+      discovery:
+        service-name: gateway #模拟和 spring-boot-service2进行负责均衡部署
+        heartbeat:
+          enabled: true #打开心跳检测
+
+    gateway:
+      routes:
+        - id: http_route_id #路由id 全局唯一
+          uri: https://blog.csdn.net/white_ice #路由目标地址
+          predicates: #断言
+            - Path=/red/blog
+        - id: servcie1_rout_id
+          uri: lb://service1 #使用service1服务名作为路由
+          predicates:
+            - Path=/service-one/** #service-one对应spring-boot-service1中的server.servlet.context.path
+            - After=2021-06-10T14:38:00.129+08:00[Asia/Shanghai] #在指定时间以后才进行路由
+        - id: system_rout_id
+          uri: lb://system
+          predicates:
+            - Path=/system-module/**
+          filters:
+            - StripPrefix=1
+
+  zipkin:
+    base-url: http://localhost:9411 #zipkin server 地址
+  sleuth:
+    sampler:
+      probability: 1.0 # 取样率，本地环境可以1.0 ，默认为0.1 = 10%
