@@ -60,7 +60,7 @@ public class JsonWebTokenUtil {
      * @param token
      * @return 结果：成功返回Claims 失败抛出异常
      */
-    private static Claims parse(String token){
+    public static Claims parse(String token){
         SecretKey key = generateKey();
         return Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody();
     }
