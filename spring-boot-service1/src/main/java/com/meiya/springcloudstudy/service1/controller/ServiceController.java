@@ -14,7 +14,7 @@ public class ServiceController {
     private Service1FeignClient feignClient;
 
     @RequestMapping(value = "/feign", method = RequestMethod.GET)
-    public String index(@RequestParam  String name){
+    public String index(@RequestParam String name){
         String s = feignClient.callService(name);
         return s;
     }
