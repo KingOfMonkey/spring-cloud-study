@@ -6,7 +6,7 @@ public enum  ResponseEnum {
 
     FAIL(401, "请求失败"),
 
-    SERVICE_EXCEPTION(21000, "业务异常"),
+    SERVICE_EXCEPTION(210, "业务异常"),
 
     SERVER_EXCEPTION(500, "服务端异常, 请联系管理员!");
 
