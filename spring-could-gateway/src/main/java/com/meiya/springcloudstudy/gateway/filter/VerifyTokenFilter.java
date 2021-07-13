@@ -29,7 +29,6 @@ public class VerifyTokenFilter implements GlobalFilter, Ordered {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        ServerHttpRequest request = exchange.getRequest();
         ServerHttpResponse response = exchange.getResponse();
         RequestPath path = exchange.getRequest().getPath();
         String token = exchange.getRequest().getHeaders().getFirst(TOKEN_KEY);
