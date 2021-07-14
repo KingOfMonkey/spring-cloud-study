@@ -30,6 +30,16 @@ spring:
             - Path=/system-module/**
           filters:
             - StripPrefix=1
+  redis:
+    host: 47.108.202.112
+    port: 6379
+    password: foobared
+    lettuce:
+      pool:
+        max-active: 8
+        min-idle: 4
+        max-wait: 60000
+    timeout: 30000
 
   zipkin:
     base-url: http://localhost:9411 #zipkin server 地址

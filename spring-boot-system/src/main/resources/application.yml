@@ -39,3 +39,14 @@ spring:
   sleuth:
     sampler:
       probability: 1.0 # 取样率，本地环境可以1.0 ，默认为0.1 = 10%
+
+  redis:
+    host: 47.108.202.112
+    port: 6379
+    password: foobared
+    lettuce:
+      pool:
+        max-active: 8
+        min-idle: 4
+        max-wait: 60000
+    timeout: 30000

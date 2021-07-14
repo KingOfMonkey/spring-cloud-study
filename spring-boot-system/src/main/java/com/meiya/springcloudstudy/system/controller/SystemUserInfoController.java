@@ -5,6 +5,7 @@ import com.meiya.springcloudstudy.common.response.ResponseData;
 import com.meiya.springcloudstudy.system.bean.dto.SystemUserInfoDto;
 import com.meiya.springcloudstudy.system.service.ISystemUserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,6 +30,9 @@ public class SystemUserInfoController {
     @Autowired
     private ISystemUserInfoService systemUserInfoService;
 
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
+
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseData login(@Valid @RequestBody SystemUserInfoDto userInfoDto, BindingResult result){
         FieldError fieldError = result.getFieldError();
@@ -36,6 +40,11 @@ public class SystemUserInfoController {
             return BuildResponseUtil.buildFailResponse(fieldError.getDefaultMessage());
         }
         return BuildResponseUtil.buildSuccessResponse(systemUserInfoService.login(userInfoDto));
+    }
+
+    @RequestMapping(value = "/redis/test")
+    public void test(){
+        stringRedisTemplate.convertAndSend("case_channel", "this is a test message！");
     }
 
 }
