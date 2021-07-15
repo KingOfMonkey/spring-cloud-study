@@ -1,13 +1,20 @@
 package com.meiya.springcloudstudy.service1.inter.impl;
 
 import com.meiya.springcloudstudy.service1.inter.RedisMsgInterface;
-import org.springframework.stereotype.Component;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-@Component
 public class RedisChannelSubImpl implements RedisMsgInterface {
+
+    private static Logger logger = LoggerFactory.getLogger(RedisChannelSubImpl.class);
 
     @Override
     public void handleMessage(String message) {
-        System.out.println("message = " + message);
+        logger.info("handleMessage = {}", message);
+    }
+
+    @Override
+    public void receiveMsg(String message) {
+        logger.info("receiveMsg = {}", message);
     }
 }

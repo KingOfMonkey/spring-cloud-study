@@ -23,11 +23,17 @@ public class RedisChanelConfig {
         container.setConnectionFactory(redisConnectionFactory);
         //可以添加多个监听器
         container.addMessageListener(listenerAdapter(new RedisChannelSubImpl()), new PatternTopic(CHANNEL_NAME));
+        container.addMessageListener(listenerAdapter2(new RedisChannelSubImpl()), new PatternTopic(CHANNEL_NAME));
         return container;
     }
 
     @Bean
     public MessageListenerAdapter listenerAdapter(RedisMsgInterface redisMsgInterface){
         return new MessageListenerAdapter(redisMsgInterface);
+    }
+
+    @Bean
+    public MessageListenerAdapter listenerAdapter2(RedisMsgInterface redisMsgInterface){
+        return new MessageListenerAdapter(redisMsgInterface, "receiveMsg");
     }
 }
